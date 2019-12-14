@@ -1,0 +1,124 @@
+<ol class="breadcrumb">
+	<li><a href="#" class="text-aqua"><i class="fa fa-user-circle"></i> Penginapan</a></li>
+	<li><a href="#" class="text-warning">Hotel</a></li>
+	<li class="active text-yellow">Create</li>
+</ol>
+	<section class="content">
+      <!-- Default box -->
+		<p class="{is_admin}">
+		<a href="{base}/event/add" class="btn btn-success">Add Event</a>
+	   </p>
+      <div class="row">
+		  <div class="col-md-6">
+						   <!-- Calendar -->
+          <div class="box box-solid">
+            <div class="box-header" style="background:#00C0EF; border-radius:4px">
+              <i class="fa fa-calendar"></i>
+
+              <h3 class="box-title">Calendar Events</h3>
+              <!-- /. tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body no-padding">
+              <!--The calendar -->
+               <div id="event" class="ee"></div>
+            </div>
+          </div>
+          <!-- /.box -->
+							
+		  </div>
+		  <div class="col-md-6">
+			  <div class="box bg-aqua box-solid">
+				<div class="box-header with-border text-center">
+					<b class="text-uppercase">agenda </b>
+				</div>
+				<div class="box-body">
+				<div class="">
+				   <ul id="list_event" class="todo-list ui-sortable">
+				   </ul>
+				</div> 
+				</p>
+				</div>
+				</div>
+				<!-- /.box-footer-->
+			  </div>
+		  </div>
+      </div>
+      <!-- /.box -->
+    </section>
+    <!-- /.content -->
+<script>
+
+
+	$(document).ready(function() {
+	
+			
+		$("#event").eventCalendar({
+			eventsjson: '{base}/kreatif/json_kalender',
+			jsonDateFormat: 'human',  // 'YYYY-MM-DD HH:MM:SS',
+			
+			
+			
+			
+		});
+		
+		
+		$('.eventsCalendar-list-wrap').hide();
+		$(this).on('click','.eventsCalendar-day a',function(e){
+		//flags.wrap.find('.eventsCalendar-day a').live('click',function(e){
+			e.preventDefault();
+			var year = $('#event').attr('data-current-year');
+			var n = parseInt($('#event').attr('data-current-month'));
+			var month = (n < 10) ? ("0" + (n+1)) : n +1;
+			var day = $(this).parent().attr('rel'); 
+				if (day.length == 1){
+					var day = '0'+day;
+				}
+			var date = year +'-'+month+'-'+ day;
+			var tgl = day +' '+month+' '+ year;
+			//console.log(day);
+			////
+			//// mulai ajax disini
+			////
+			$.ajax({
+				url: "{base}/event/event_ajax", 
+				type: 'GET',
+				data:{
+					date:date
+				},
+				success: function(result){ 
+					$('#list_event').html('');
+					result = $.parseJSON(result);
+					//console.log(result.length);
+					if (result.length < 1){
+						$('#list_event').append('<li class="text text-center"> Tidak ada event pada tanggal '+tgl+'</li>');
+					}else{
+					Object.keys(result).forEach(function(key) {
+						//console.log(result[key].title);
+						$('#list_event').append('<li>'
+						+ '<span class="pull-right"><a href="{base}/event/del/'+result[key].kalender_event_id
+						+ '" class="btn btn-danger btn-xs" onclick="return confirm(\'Are You Sure...?\')"> <i class="fa fa-times"></i> </a></span>'
+						+ '<div class="panel panel-heading"><small class="label label-warning">' +result[key].tanggal +'</small>'
+						+ '<small class="label label-success">' +result[key].jam +'</small>'
+						+ '<span class="text">' + result[key].title_event + '</span></div>'
+						+ '<p class="panel panel-body">'+result[key].ket_event +'</p>'
+						+ '</li>');
+						/// hajar sendiri dah...siapp keren
+					});
+				}}
+			});
+			////
+			//// akhir ajax
+			////
+			////
+		});
+		
+							
+							
+							
+
+		
+	});
+
+ 
+</script>

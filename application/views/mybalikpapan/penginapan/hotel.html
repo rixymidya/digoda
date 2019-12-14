@@ -1,0 +1,58 @@
+<ol class="breadcrumb">
+	<li><a href="#" class="text-yellow"><i class="fa fa-user-circle"></i> Turis</a></li>
+	<li><a href="#" class="text-yellow">Penginapan</a></li>
+	<li class="active text-yellow">Hotel</li>
+</ol>
+	<section class="content">
+	
+	<p>
+	<a href="{base}/turis/create_hotel" class="btn btn-warning {is_admin}">Tambah Hotel</a>
+	</p>
+      <div class="panel">
+		  <div class="panel-heading">
+		  <!-- search form -->
+		  <form action="#" method="get">
+			<div class="input-group">
+			  <input type="text" name="q" class="form-control" placeholder="Cari Hotel ....">
+				  <span class="input-group-btn">
+					<button type="submit" name="search" id="search-btn" class="btn btn-flat btn-primary"><i class="fa fa-search"></i>
+					</button>
+				  </span>
+			</div>
+			<small class="pull-right">Tersedia {jumlah_hotel} Hotel</small>
+		  </form>	
+		  </div>
+		<div class="panel-body">
+	{hotel_all}
+			<div class="box collapsed-box">
+				<div class="box-header">
+					<span class="text-uppercase">{nama_hotel}  {bintang_hotel} </span>
+						<div class="box-tools pull-right">
+							<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+							</button>
+						</div>
+				</div>
+				<div class="box-body text-center">
+					<p>{alamat_hotel}</p>
+					<p><span class="fa fa-phone-square"></span>{telp_hotel}</p>
+				  <img width="100%" src="{gambar_hotel}">
+
+				</div>
+				<!-- /.box-body -->
+				<div class="box-footer">
+				 <a href="{map_hotel}" class="btn btn-warning btn-block">Viep Map</a>
+
+
+				</div>
+				<!-- /.box-footer-->
+			 </div>
+
+
+
+          <!-- /.box -->
+	{/hotel_all}
+        </div>
+        </div>
+      <!-- /.box -->
+    </section>
+ 
